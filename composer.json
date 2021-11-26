@@ -8,13 +8,17 @@
         {
             "name": "Toon Verwerft",
             "email": "toon.verwerft@phpro.be"
+        },
+        {
+            "name": "Jelle Deneweth",
+            "email": "jelle.deneweth@gmail.com"
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.1",
         "ext-json": "*",
         "amphp/amp": "^2.5",
-        "azjezz/psl": "^1.6",
+        "azjezz/psl": "^2.0",
         "league/uri": "^6.3",
         "php-http/client-common": "^2.3",
         "php-http/discovery": "^1.12",
@@ -34,9 +38,9 @@
         "php-http/mock-client": "^1.4",
         "php-http/vcr-plugin": "^1.0",
         "phpro/grumphp-shim": "^1.2",
-        "symfony/http-client": "^5.1 || ^6.0",
-        "symfony/property-access": "^5.2 || ^6.0",
-        "symfony/serializer": "^5.2 || ^6.0"
+        "symfony/http-client": "^5.3 || ^6.0",
+        "symfony/property-access": "^5.3 || ^6.0",
+        "symfony/serializer": "^5.3 || ^6.0"
     },
     "suggest": {
         "symfony/http-client": "If you want to use the built-in symfony/http-client tools.",
@@ -46,7 +50,10 @@
         "php-http/vcr-plugin": "For testing HTTP clients through storing and replaying requests and responses."
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpro/grumphp-shim": true
+        }
     },
     "autoload": {
         "psr-4": {

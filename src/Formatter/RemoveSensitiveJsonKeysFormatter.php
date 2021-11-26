@@ -30,19 +30,34 @@ final class RemoveSensitiveJsonKeysFormatter implements HttpFormatter
 
     public function formatRequest(RequestInterface $request): string
     {
-        return $this->removeCredentials(
+        return $this->removeSensitiveData(
             $this->formatter->formatRequest($request)
         );
     }
 
+    /** @psalm-suppress DeprecatedMethod */
     public function formatResponse(ResponseInterface $response): string
     {
-        return $this->removeCredentials(
+        return $this->removeSensitiveData(
             $this->formatter->formatResponse($response)
         );
     }
 
-    private function removeCredentials(string $info): string
+    /** @psalm-suppress DeprecatedMethod MixedReturnStatement MixedInferredReturnType */
+    public function formatResponseForRequest(ResponseInterface $response, RequestInterface $request): string
+    {
+        if (method_exists($this->formatter, 'formatResponseForRequest')) {
+            return $this->removeSensitiveData(
+                $this->formatter->formatResponseForRequest($response, $request)
+            );
+        }
+
+        return $this->removeSensitiveData(
+            $this->formatter->formatResponse($response)
+        );
+    }
+
+    private function removeSensitiveData(string $info): string
     {
         return array_reduce(
             $this->sensitiveJsonKeys,

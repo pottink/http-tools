@@ -30,15 +30,26 @@ final class RemoveSensitiveQueryStringsFormatter implements HttpFormatter
 
     public function formatRequest(RequestInterface $request): string
     {
-        return $this->removeQueryStrings($request);
+        return $this->removeSensitiveData($request);
     }
 
+    /** @psalm-suppress DeprecatedMethod */
     public function formatResponse(ResponseInterface $response): string
     {
         return $this->formatter->formatResponse($response);
     }
 
-    private function removeQueryStrings(RequestInterface $request): string
+    /** @psalm-suppress DeprecatedMethod MixedReturnStatement MixedInferredReturnType */
+    public function formatResponseForRequest(ResponseInterface $response, RequestInterface $request): string
+    {
+        if (method_exists($this->formatter, 'formatResponseForRequest')) {
+            return $this->formatter->formatResponseForRequest($response, $request);
+        }
+
+        return $this->formatter->formatResponse($response);
+    }
+
+    private function removeSensitiveData(RequestInterface $request): string
     {
         $uri = $request->getUri();
         $query = $uri->getQuery();
